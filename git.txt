@@ -1,0 +1,389 @@
+git --version
+version of git
+
+initial setup:
+git config --global user.name "suresh kurma"
+git config --global user.email "suresh08812@gmail.com"
+
+
+to check confiuration values:
+git config --list
+
+for help:
+git config --help
+
+Initialise local repository for an existing project :
+git init
+
+Before commit, check Status:
+git status
+
+To ignore files to add to the project (personal preferanc files)
+create a file .gitignore.
+touch .gitignore
+
+add list of ignoreable files to .gitignore
+
+staging area - where we are organise wat we want to commit
+
+
+add files to staging area:
+git add -A
+git add file1 file2
+
+remove files from staging area:
+git reset
+git reset file1
+
+to commit the changes:
+git commit -m "initial commit"
+
+to check the log:
+git log
+
+
+
+To clone your company's remote repository of github:
+git clone <url> <where to clone>
+eg:
+git clone git@github.com:sureshkurma/mytest.git my_proj_dir
+
+
+To set remote repository
+user@user-PC MINGW32 /d/Terraform/demo_state (mar31)
+$ git remote set-url origin git@github.com:sureshkurma/mytest.git
+or
+git remote add origin git@github.com:sureshkurma/rds.git
+
+user@user-PC MINGW32 /d/Terraform/demo_state (mar31)
+$ git remote -v
+origin  git@github.com:sureshkurma/mytest.git (fetch)
+origin  git@github.com:sureshkurma/mytest.git (push)
+
+
+To view information about the remote repository
+git remote -v
+git branch -v
+
+To push changes to Remote Repository:
+
+to view the differances:
+git diff
+
+to add the changes to staging area:
+git add -A
+git commit -m "added new text"
+
+Before push, check any chnages on remote repo since last time you pull/clone - to pull latest changes:
+git pull origin master
+
+to push local repo changes to remote repo:
+git push origin master
+
+Create a branch:
+git branch mar31
+
+to view list of branches:
+git branch
+
+to enter in to branch:
+git checkout mar31
+
+git add -A
+git commit -m "do the changes"
+
+
+After commit, push branch to remote repository:
+git push -u origin <branchname>
+
+user@user-PC MINGW32 /d/Terraform/demo_state (mar31)
+$ git push -u origin mar31
+Counting objects: 7, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (7/7), done.
+Writing objects: 100% (7/7), 859 bytes | 95.00 KiB/s, done.
+Total 7 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), done.
+To github.com:sureshkurma/mytest.git
+ * [new branch]      mar31 -> mar31
+Branch 'mar31' set up to track remote branch 'mar31' from 'origin'.
+
+To view list of branches:
+git branch -a
+
+$ git branch -a
+* mar31
+  master
+  remotes/origin/mar31
+
+To merge branch:
+git checkout master
+git pull origin master
+git branch --merged    ## list of branches already merged
+git merge mar31
+git push origin master
+
+log:
+user@user-PC MINGW32 /d/Terraform/demo_rds (mar31)
+$ git commit -m "for mar31 branching in rds"
+[mar31 a5ade37] for mar31 branching in rds
+ 2 files changed, 2 insertions(+)
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (mar31)
+$ git push -u origin mar31
+Counting objects: 4, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (4/4), done.
+Writing objects: 100% (4/4), 369 bytes | 61.00 KiB/s, done.
+Total 4 (delta 3), reused 0 (delta 0)
+remote: Resolving deltas: 100% (3/3), completed with 3 local objects.
+To github.com:sureshkurma/rds.git
+ * [new branch]      mar31 -> mar31
+Branch 'mar31' set up to track remote branch 'mar31' from 'origin'.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (mar31)
+$ git branch -a
+* mar31
+  master
+  remotes/origin/mar31
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (mar31)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+  mar31
+* master
+  remotes/origin/mar31
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git pull origin master
+From github.com:sureshkurma/rds
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+* master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git merge mar31
+Updating b9dd734..a5ade37
+Fast-forward
+ rds.tf       | 1 +
+ variables.tf | 1 +
+ 2 files changed, 2 insertions(+)
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+  mar31
+* master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+  mar31
+* master
+  remotes/origin/mar31
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git push origin master
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:sureshkurma/rds.git
+   b9dd734..a5ade37  master -> master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+  mar31
+* master
+  remotes/origin/mar31
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$
+
+Delete a branch:
+git branch --merged
+git branch -d mar31
+git branch -a
+git push origin --delete mar31
+
+eg:
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+  mar31
+* master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -d mar31
+Deleted branch mar31 (was 7a11c81).
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+* master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+* master
+  remotes/origin/mar31
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git push origin --delete mar31
+To github.com:sureshkurma/rds.git
+ - [deleted]         mar31
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+* master
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$
+
+
+--------------------------------------- FULL EXAMPLE  ----------------------------
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch subtract
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git checkout subtract
+Switched to branch 'subtract'
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ ls
+connection.txt  outputs.tf   rds.tf    sec_grps.tf        terraform.tfstate.backup  variables.tf
+instance.tf     provider.tf  read.txt  terraform.tfstate  terraform.tfvars          vpc-subnets.tf
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ cat>>read.txt
+New addition
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ cat read.txt
+Hi...
+this is test file
+New addition
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git status
+On branch subtract
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   read.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .terraform/
+        connection.txt
+        provider.tf
+        terraform.tfstate
+        terraform.tfstate.backup
+        terraform.tfvars
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git add read.txt
+warning: LF will be replaced by CRLF in read.txt.
+The file will have its original line endings in your working directory.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git status
+On branch subtract
+Changes to be committed:
+  (use "git reset HEAD <file>..." to unstage)
+
+        modified:   read.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+        .terraform/
+        connection.txt
+        provider.tf
+        terraform.tfstate
+        terraform.tfstate.backup
+        terraform.tfvars
+
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git commit -m "new branch subtract"
+[subtract 0045f26] new branch subtract
+ 1 file changed, 1 insertion(+)
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git push -u origin subtract
+Counting objects: 3, done.
+Delta compression using up to 2 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 291 bytes | 29.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:sureshkurma/rds.git
+ * [new branch]      subtract -> subtract
+Branch 'subtract' set up to track remote branch 'subtract' from 'origin'.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (subtract)
+$ git checkout master
+Switched to branch 'master'
+Your branch is up to date with 'origin/master'.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git pull origin master
+From github.com:sureshkurma/rds
+ * branch            master     -> FETCH_HEAD
+Already up to date.
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git merge subtract
+Updating 7a11c81..0045f26
+Fast-forward
+ read.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git push origin master
+Total 0 (delta 0), reused 0 (delta 0)
+To github.com:sureshkurma/rds.git
+   7a11c81..0045f26  master -> master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+* master
+  subtract
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -d subtract
+Deleted branch subtract (was 0045f26).
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch --merged
+* master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+* master
+  remotes/origin/master
+  remotes/origin/subtract
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git push origin --delete subtract
+To github.com:sureshkurma/rds.git
+ - [deleted]         subtract
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$ git branch -a
+* master
+  remotes/origin/master
+
+user@user-PC MINGW32 /d/Terraform/demo_rds (master)
+$
